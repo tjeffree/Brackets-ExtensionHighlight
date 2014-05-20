@@ -4,7 +4,7 @@ define(function(require, exports, module) {
 		sideBarColour = $('#sidebar').css('backgroundColor').match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/),
 		bgLuminance = luminanace(sideBarColour[1],sideBarColour[2],sideBarColour[3]);
 
-	function addIcon(extension, color) {
+	function addDef(extension, color) {
 		fileInfo[extension] = {
 			color: color
 		};
@@ -14,52 +14,52 @@ define(function(require, exports, module) {
 	}
 
 	// XML
-	addIcon('xml',	'#ff6600');
-	addIcon('html',   '#E34C26');
-	addIcon('svg',	'#ff9900');
+	addDef('xml',	'#ff6600');
+	addDef('html',   '#E34C26');
+	addDef('svg',	'#ff9900');
 
 	// Stylesheets
-	addIcon('css',	'#0270b9');
-	addIcon('scss',   '#c6538c');
+	addDef('css',	'#0270b9');
+	addDef('scss',   '#c6538c');
 	addAlias('sass',  'scss');
-	addIcon('less',   '#2b5086');
-	addIcon('styl',   '#b3d107');
+	addDef('less',   '#2b5086');
+	addDef('styl',   '#b3d107');
 
 	// JavaScript
-	addIcon('js',	 '#e5a228');
-	addIcon('ts',	 '#0074c1');
-	addIcon('coffee', '#425d99');
-	addIcon('json',   '#e5a228');
+	addDef('js',	 '#e5a228');
+	addDef('ts',	 '#0074c1');
+	addDef('coffee', '#425d99');
+	addDef('json',   '#e5a228');
 
 	// Server side
-	addIcon('php',	'#6976c3');
+	addDef('php',	'#6976c3');
 
 	// Java
-	addIcon('java',   '#5382A1');
+	addDef('java',   '#5382A1');
 	addAlias('class', 'java');
 
 	// Shell
-	addIcon('sh',	 '#008d00');
+	addDef('sh',	 '#008d00');
 
 	// Images
-	addIcon('png',	'#ff4000');
+	addDef('png',	'#ff4000');
 	addAlias('jpg',   'png');
 	addAlias('jpeg',  'png');
 	addAlias('tiff',  'png');
 	addAlias('ico',   'png');
-	addIcon('gif',	'#ff4000');
+	addDef('gif',	'#ff4000');
 
 	// Videos
-	addIcon('mp4',	'#008d00');
+	addDef('mp4',	'#008d00');
 	addAlias('webm',  'mp4');
 	addAlias('ogg',   'mp4');
 
 	// Audio
-	addIcon('mp3',	'#921100');
+	addDef('mp3',	'#921100');
 	addAlias('wav',   'mp3');
 
 	// Readme
-	addIcon('md',	 '#b94700');
+	addDef('md',	 '#b94700');
 
 	var def = {
 		color: '#ddd'
@@ -72,6 +72,9 @@ define(function(require, exports, module) {
 	ExtensionUtils.loadStyleSheet(module, "styles/style.css");
 	
 	function renderFiles() {
+		
+		$('#project-files-container li>a>.ext-col').remove();
+		$('#project-files-container li>a>.extension').show();
 		
 		var $items = $('#project-files-container li>a');
 
