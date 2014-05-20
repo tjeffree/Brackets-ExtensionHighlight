@@ -61,10 +61,6 @@ define(function(require, exports, module) {
 	// Readme
 	addDef('md',	 '#b94700');
 
-	var def = {
-		color: '#ddd'
-	};
-
 	var ProjectManager = brackets.getModule('project/ProjectManager'),
 		DocumentManager = brackets.getModule('document/DocumentManager'),
 		ExtensionUtils = brackets.getModule("utils/ExtensionUtils");
@@ -76,20 +72,17 @@ define(function(require, exports, module) {
 		$('#project-files-container li>a>.ext-col').remove();
 		$('#project-files-container li>a>.extension').show();
 		
-		var $items = $('#project-files-container li>a');
+		var $items = $('#project-files-container li>a'),
+			$ext;
 
 		$items.each(function(index) {
-			var $ext = $(this).find('.extension'),
-				ext = ($ext.text() || '').substr(1),
-				data;
-
-			if ($(this).parent().hasClass('jstree-leaf')) {
-				data = fileInfo.hasOwnProperty(ext) ? fileInfo[ext] : def;
-			} else {
+			var $ext = $(this).find('.extension');
+			
+			if (!$(this).parent().hasClass('jstree-leaf')) {
 				return;
 			}
 
-			addColour($ext, ext, data);
+			parseExtension($ext);
 		});
 
 	}
@@ -99,15 +92,38 @@ define(function(require, exports, module) {
 		$('#open-files-container li>a>.ext-col').remove();
 		$('#open-files-container li>a>.extension').show();
 
-		var $items = $('#open-files-container li>a');
+		var $items = $('#open-files-container li>a'),
+			$ext;
 
 		$items.each(function(index) {
-			var $ext = $(this).find('.extension'),
-				ext = ($ext.text() || '').substr(1),
-				data = fileInfo.hasOwnProperty(ext) ? fileInfo[ext] : def;
-
-			addColour($ext, ext, data);
+			$ext = $(this).find('.extension');
+			parseExtension($ext);
 		});
+	}
+	
+	function parseExtension($ext) {
+		
+		var ext = ($ext.text() || '').substr(1),
+			allExt = ext.split('.'),
+			eLen = allExt.length,
+			thisExt,
+			data, x;
+		
+		for (x=0; x<=eLen; x++) {
+			
+			thisExt = allExt[x];
+		
+			data = fileInfo.hasOwnProperty(thisExt) ? fileInfo[thisExt] : null;
+
+			if (data === null) {
+				// leave unchanged
+				continue;
+			}
+
+			addColour($ext, thisExt, data);
+			
+		}
+		
 	}
 	
 	function addColour($ext, ext, data) {
