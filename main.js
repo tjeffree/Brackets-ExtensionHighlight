@@ -114,7 +114,11 @@ define(function(require, exports, module) {
 			thisExt,
 			data, x;
 		
-		for (x=0; x<eLen; x++) {
+		if (eLen === 0) {
+			return;
+		}
+		
+		for (x=eLen-1; x>=0; x--) {
 			
 			thisExt = allExt[x];
 		
