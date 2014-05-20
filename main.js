@@ -119,7 +119,7 @@ define(function(require, exports, module) {
 				color: data.color
 			}),
 		
-			contrast = getContrast50(data.color);
+			contrast = getContrast(data.color);
 		
 		if (contrast === false) {
 			$new.css({
@@ -133,7 +133,7 @@ define(function(require, exports, module) {
 		$new.insertAfter($ext);
 	}
 	
-	function getContrast50(hexcolor){
+	function getContrast(hexcolor){
 		var r = parseInt(hexcolor.substr(1,2),16),
 			g = parseInt(hexcolor.substr(3,2),16),
 			b = parseInt(hexcolor.substr(5,2),16),
