@@ -4,7 +4,7 @@
     "description": "File extension colours in Brackets' file tree.",
     "homepage": "https://github.com/tjeffree/Brackets-ExtensionHighlight",
     "version": "1.0.0",
-    "author": "Tony Jeffree (https://github.com/tjeffree)",
+    "author": "Tony Jeffree <tjeffree@gmail.com> (https://github.com/tjeffree)",
     "license": "MIT",
 
     "keywords": [
