@@ -1,9 +1,9 @@
 {
-    "name": "tjeffree.extensionhighliter",
+    "name": "tjeffree.extensionhighlighter",
     "title": "Brackets Extension Highlighter",
     "description": "File extension colours in Brackets' file tree.",
     "homepage": "https://github.com/tjeffree/Brackets-ExtensionHighlight",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "Tony Jeffree <tjeffree@gmail.com> (https://github.com/tjeffree)",
     "license": "MIT",
 
