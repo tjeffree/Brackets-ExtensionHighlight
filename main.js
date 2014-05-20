@@ -30,6 +30,7 @@ define(function(require, exports, module) {
 	addDef('js',	 '#e5a228');
 	addDef('ts',	 '#0074c1');
 	addDef('coffee', '#425d99');
+	addAlias('eco');
 	addDef('json',   '#e5a228');
 
 	// Server side
