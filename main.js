@@ -61,6 +61,10 @@ define(function(require, exports, module) {
 
 	// Readme
 	addDef('md',	 '#b94700');
+	
+	var def = {
+		color: '#ffffff'
+	}
 
 	var ProjectManager = brackets.getModule('project/ProjectManager'),
 		DocumentManager = brackets.getModule('document/DocumentManager'),
@@ -110,16 +114,11 @@ define(function(require, exports, module) {
 			thisExt,
 			data, x;
 		
-		for (x=0; x<=eLen; x++) {
+		for (x=0; x<eLen; x++) {
 			
 			thisExt = allExt[x];
 		
-			data = fileInfo.hasOwnProperty(thisExt) ? fileInfo[thisExt] : null;
-
-			if (data === null) {
-				// leave unchanged
-				continue;
-			}
+			data = fileInfo.hasOwnProperty(thisExt) ? fileInfo[thisExt] : def;
 
 			addColour($ext, thisExt, data);
 			
