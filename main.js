@@ -2,7 +2,8 @@ define(function(require, exports, module) {
 	
 	var fileInfo = {},
 		sideBarColour = $('#sidebar').css('backgroundColor').match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/),
-		bgLuminance = luminanace(sideBarColour[1],sideBarColour[2],sideBarColour[3]);
+		bgLuminance = luminanace(sideBarColour[1],sideBarColour[2],sideBarColour[3]),
+		constrastCache = {}
 
 	function addDef(extension, color) {
 		fileInfo[extension] = {
@@ -150,12 +151,19 @@ define(function(require, exports, module) {
 	}
 	
 	function getContrast(hexcolor){
-		var r = parseInt(hexcolor.substr(1,2),16),
-			g = parseInt(hexcolor.substr(3,2),16),
-			b = parseInt(hexcolor.substr(5,2),16),
-			result = luminanace(r,g,b);
 		
-		return (result / bgLuminance < 4.5) ? false : true;
+		if (!(hexcolor in constrastCache)) {
+		
+			var r = parseInt(hexcolor.substr(1,2),16),
+				g = parseInt(hexcolor.substr(3,2),16),
+				b = parseInt(hexcolor.substr(5,2),16),
+				result = luminanace(r,g,b);
+
+			constrastCache[hexcolor] = (result / bgLuminance < 4.5) ? false : true;
+		
+		}
+		
+		return constrastCache[hexcolor];
 	}
 	
 	function luminanace(r, g, b) {
