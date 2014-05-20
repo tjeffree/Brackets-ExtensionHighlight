@@ -1,0 +1,8 @@
+.ext-col.bg-on {
+	border-radius: 8px;
+	padding: 0 5px 0 0;
+	color: #fff !important;
+}
+.ext-col::before {
+	content: ".";
+}
