@@ -17,6 +17,7 @@ define(function(require, exports, module) {
 	// XML
 	addDef('xml',	'#ff6600');
 	addDef('html',   '#E34C26');
+	addAlias('htm',  'scss');
 	addDef('svg',	'#ff9900');
 
 	// Stylesheets
