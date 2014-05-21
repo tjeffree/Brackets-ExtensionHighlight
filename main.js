@@ -163,7 +163,7 @@ define(function(require, exports, module) {
 				b = parseInt(hexcolor.substr(5,2),16),
 				result = luminanace(r,g,b);
 
-			constrastCache[hexcolor] = (result / bgLuminance < 4.5) ? false : true;
+			constrastCache[hexcolor] = (result / bgLuminance < 3) ? false : true;
 		
 		}
 		
