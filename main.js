@@ -64,6 +64,9 @@ define(function(require, exports, module) {
 	// Readme
 	addDef('md',	 '#b94700');
 	
+	// Templating
+	addDef('jade',	 '#00a86b');
+	
 	var def = {
 		color: '#ffffff'
 	}
@@ -80,15 +83,17 @@ define(function(require, exports, module) {
 		$('#project-files-container li>a>.extension').show();
 		
 		var $items = $('#project-files-container li>a'),
-			$ext;
+			$this, $ext;
 
 		$items.each(function(index) {
-			var $ext = $(this).find('.extension');
+			$this = $(this);
 			
-			if (!$(this).parent().hasClass('jstree-leaf')) {
+			if (!$this.parent().hasClass('jstree-leaf')) {
 				return;
 			}
-
+			
+			$ext  = $this.find('.extension');
+			
 			parseExtension($ext);
 		});
 
@@ -112,22 +117,16 @@ define(function(require, exports, module) {
 		
 		var ext = ($ext.text() || '').substr(1),
 			allExt = ext.split('.'),
-			eLen = allExt.length,
-			thisExt,
-			data, x;
+			x = allExt.length,
+			data;
 		
-		if (eLen === 0) {
+		if (x === 0) {
 			return;
 		}
 		
-		for (x=eLen-1; x>=0; x--) {
-			
-			thisExt = allExt[x];
-		
-			data = fileInfo.hasOwnProperty(thisExt) ? fileInfo[thisExt] : def;
-
-			addColour($ext, thisExt, data);
-			
+		while (x--) {
+			data = fileInfo.hasOwnProperty(allExt[x]) ? fileInfo[allExt[x]] : def;
+			addColour($ext, allExt[x], data);
 		}
 		
 	}
