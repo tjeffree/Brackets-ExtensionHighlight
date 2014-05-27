@@ -33,6 +33,7 @@ define(function(require, exports, module) {
 	addDef('coffee', '#425d99');
 	addAlias('eco','coffee');
 	addDef('json',   '#e5a228');
+	addDef('ls',     '#369bd7');
 
 	// Server side
 	addDef('php',	'#6976c3');
@@ -43,6 +44,7 @@ define(function(require, exports, module) {
 
 	// Shell
 	addDef('sh',	 '#008d00');
+	addDef('bat',	 '#60c910');
 
 	// Images
 	addDef('png',	'#ff4000');
@@ -77,46 +79,29 @@ define(function(require, exports, module) {
 
 	ExtensionUtils.loadStyleSheet(module, "styles/style.css");
 	
-	function renderFiles() {
+	function renderFiles(container, requireLeaf) {
 		
-		$('#project-files-container li>a>.ext-col').remove();
-		$('#project-files-container li>a>.extension').show();
+		$(container + ' li>a>.ext-col').remove();
+		$(container + ' li>a>.extension').show();
 		
-		var $items = $('#project-files-container li>a'),
-			$this, $ext;
-
-		$items.each(function(index) {
-			$this = $(this);
+		[].forEach.call( document.querySelectorAll(container + ' li>a') , function(el) {
 			
-			if (!$this.parent().hasClass('jstree-leaf')) {
-				return;
+			if (requireLeaf === true && !el.parentNode.classList.contains('jstree-leaf')) {
+				return false;
 			}
 			
-			$ext  = $this.find('.extension');
-			
-			parseExtension($ext);
+			parseExtension( el.querySelector('.extension') );
 		});
 
-	}
-
-	function renderWorkingSet() {
-		
-		$('#open-files-container li>a>.ext-col').remove();
-		$('#open-files-container li>a>.extension').show();
-
-		var $items = $('#open-files-container li>a'),
-			$ext;
-
-		$items.each(function(index) {
-			$ext = $(this).find('.extension');
-			parseExtension($ext);
-		});
 	}
 	
-	function parseExtension($ext) {
+	function parseExtension(ext) {
 		
-		var ext = ($ext.text() || '').substr(1),
-			allExt = ext.split('.'),
+		if (ext === null) {
+			return;
+		}
+		
+		var allExt = ext.innerText.substr(1).split('.'),
 			x = allExt.length,
 			data;
 		
@@ -126,32 +111,28 @@ define(function(require, exports, module) {
 		
 		while (x--) {
 			data = fileInfo.hasOwnProperty(allExt[x]) ? fileInfo[allExt[x]] : def;
-			addColour($ext, allExt[x], data);
+			addColour(ext, allExt[x], data);
 		}
 		
 	}
 	
-	function addColour($ext, ext, data) {
+	function addColour(oldExt, ext, data) {
 		
-		var $new = $('<span>')
-			.text(ext)
-			.addClass('ext-col')
-			.css({
-				color: data.color
-			}),
-		
+		var newEle   = document.createElement('span'),
 			contrast = getContrast(data.color);
 		
+		newEle.appendChild(document.createTextNode(ext));
+		newEle.className   = 'ext-col';
+		newEle.style.color = data.color;
+		
 		if (contrast === false) {
-			$new.css({
-				/*backgroundColor: data.color*/
-				background: "linear-gradient(to right, rgba(0,0,0,0) 0%, " + data.color + " 100%)"
-			})
-			.addClass('bg-on');
+			newEle.style.background = "linear-gradient(to right, rgba(0,0,0,0) 0%, " + data.color + " 33%)";
+			newEle.classList.add('bg-on');
 		}
-
-		$ext.hide();
-		$new.insertAfter($ext);
+		
+		oldExt.style.display = 'none';
+		oldExt.parentNode.appendChild(newEle);
+		
 	}
 	
 	function getContrast(hexcolor){
@@ -182,14 +163,18 @@ define(function(require, exports, module) {
 
 	$(ProjectManager).on('projectOpen projectRefresh', function() {
 		var events = 'load_node.jstree create_node.jstree set_text.jstree';
+		
+		function doRender() {
+			renderFiles('#project-files-container', true);
+		}
+		
+		doRender();
 
-		renderFiles();
-
-		$('#project-files-container').off(events, renderFiles)
-									 .on(events, renderFiles);
+		$('#project-files-container').off(events, doRender)
+									 .on(events, doRender);
 	});
 
 	$(DocumentManager).on("workingSetAdd workingSetAddList workingSetRemove workingSetRemoveList fileNameChange pathDeleted workingSetSort", function() {
-		renderWorkingSet();
+		renderFiles('#open-files-container');
 	});
 });

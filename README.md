@@ -6,13 +6,14 @@ This extension adds colours and highlights to file extensions on the brackets fi
  - JSON
  - TypeScript
  - CoffeeScript
+ - LiveScript
  - HTML, HTM
  - SVG
  - XML
  - PHP
  - Java
  - CSS, SASS, Less, Stylus
- - Shell script
+ - Shell script (sh, bat)
  - Markdown
  - PNG, JPG, JPEG, TIFF, ICO
  - GIF
