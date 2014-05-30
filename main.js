@@ -102,14 +102,15 @@ define(function(require, exports, module) {
 		}
 		
 		var allExt = ext.innerText.substr(1).split('.'),
-			x = allExt.length,
+			x = 0, 
+			extLen = allExt.length,
 			data;
 		
-		if (x === 0) {
+		if (extLen === 0) {
 			return;
 		}
 		
-		while (x--) {
+		for (;x<extLen;x++) {
 			data = fileInfo.hasOwnProperty(allExt[x]) ? fileInfo[allExt[x]] : def;
 			addColour(ext, allExt[x], data);
 		}
