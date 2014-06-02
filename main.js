@@ -18,7 +18,6 @@ define(function(require, exports, module) {
 	addDef('xml',	'#ff6600');
 	addDef('html',   '#E34C26');
 	addAlias('htm',  'html');
-	addDef('svg',	'#ff9900');
 
 	// Stylesheets
 	addDef('css',	'#0270b9');
@@ -53,6 +52,7 @@ define(function(require, exports, module) {
 	addAlias('tiff',  'png');
 	addAlias('ico',   'png');
 	addDef('gif',	'#ff4000');
+	addDef('svg',	'#ff9900');
 
 	// Videos
 	addDef('mp4',	'#008d00');
@@ -65,9 +65,34 @@ define(function(require, exports, module) {
 
 	// Readme
 	addDef('md',	 '#b94700');
+	addAlias('markdown', 'md');
 	
 	// Templating
 	addDef('jade',	 '#00a86b');
+	
+	// Git
+	addDef('gitignore', '#f64d27');
+	addDef('gitmodules','#f64d27');
+	
+	// Fonts
+	addDef('ttf', '#b42950');
+	addAlias('eot','ttf');
+	addAlias('woff','ttf');
+	
+	// Webservers
+	addDef('htaccess', '#e41a54');
+	addDef('htpasswd', '#6c369c');
+	addDef('conf', '#009900');
+	
+	// Puppet
+	addDef('pp',      '#7761A7');
+	
+	// Other text files
+	addDef('txt',       '#4192c1');
+	addDef('log',       '#225dc9');
+	addDef('npmignore', '#cb3837');
+	addDef('yml',       '#008000');
+	addAlias('yaml',    'yml');
 	
 	var def = {
 		color: '#ffffff'

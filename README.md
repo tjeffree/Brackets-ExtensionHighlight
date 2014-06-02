@@ -14,12 +14,19 @@ This extension adds colours and highlights to file extensions on the brackets fi
  - Java
  - CSS, SASS, Less, Stylus
  - Shell script (sh, bat)
+ - TXT
  - Markdown
  - PNG, JPG, JPEG, TIFF, ICO
  - GIF
  - MP4, WebM, OGG
  - MP3, WAV
  - Jade
+ - EOT, TTF, WOFF
+ - GitIgnore, GitModules
+ - NPMIgnore
+ - HTAccess, HTPasswd, Conf
+ - YAML
+ - Puppet (pp)
 
 You can request more file formats by creating an issue. Choose a color (in hex format) and add it to the issue.
 
