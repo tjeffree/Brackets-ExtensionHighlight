@@ -90,6 +90,15 @@ define(function(require, exports, module) {
     // SQL
     addDef('sql',       '#008DBB');
     
+    // Archives
+    addDef('zip',       '#008858');
+    addAlias('rar',     'zip');
+    addAlias('7z' ,     'zip');
+    addAlias('tgz',     'zip');
+    addAlias('tar',     'zip');
+    addAlias('gz' ,     'zip');
+    addAlias('bzip',    'zip');
+    
     // Other text files
     addDef('txt',       '#4192c1');
     addDef('log',       '#225dc9');
