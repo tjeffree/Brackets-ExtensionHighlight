@@ -46,13 +46,13 @@ define(function(require, exports, module) {
     addDef('bat',       '#60c910');
 
     // Images
-    addDef('png',       '#ff4000');
-    addAlias('jpg',     'png');
-    addAlias('jpeg',    'png');
-    addAlias('tiff',    'png');
-    addAlias('ico',     'png');
-    addDef('gif',       '#ff4000');
-    addDef('svg',       '#ff9900');
+    addDef('png',       '#dbb1a9');
+    addDef('jpg',       '#dedfa3');
+    addAlias('jpeg',    'jpg');
+    addDef('tiff',      '#ff4000');
+    addDef('ico',       '#b6d2d1');
+    addDef('gif',       '#aaecc0');
+    addDef('svg',       '#c0c5eb');
 
     // Videos
     addDef('mp4',       '#008d00');
