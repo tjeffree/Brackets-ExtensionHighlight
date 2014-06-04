@@ -87,6 +87,9 @@ define(function(require, exports, module) {
     // Puppet
     addDef('pp',        '#7761A7');
     
+    // SQL
+    addDef('sql',       '#008DBB');
+    
     // Other text files
     addDef('txt',       '#4192c1');
     addDef('log',       '#225dc9');
