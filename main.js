@@ -1,9 +1,22 @@
 define(function(require, exports, module) {
     
     var fileInfo = {},
-        sideBarColour = $('#sidebar').css('backgroundColor').match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/),
-        bgLuminance = luminanace(sideBarColour[1],sideBarColour[2],sideBarColour[3]),
-        constrastCache = {}
+        sideBarColour = null,
+        bgLuminance,
+        constrastCache = {};
+
+    // Get initial sidebar colour and luminance
+    (function() {
+        sideBarColour = $('#sidebar').css('backgroundColor').match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+
+        if (sideBarColour === null) {
+            // Set to default value
+            sideBarColour = [0,68,71,73];
+        }
+
+        bgLuminance = luminanace(sideBarColour[1],sideBarColour[2],sideBarColour[3]);
+
+    })();
 
     function addDef(extension, color) {
         fileInfo[extension] = {
