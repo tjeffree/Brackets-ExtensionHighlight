@@ -120,6 +120,15 @@ define(function(require, exports, module) {
     addDef('yml',       '#008000');
     addAlias('yaml',    'yml');
     
+    // Other dot files
+    addDef('classpath',      '#bbbbbb');
+    addAlias('editorconfig', 'classpath');
+    addAlias('jscsrc',       'classpath');
+    addAlias('jshintignore', 'classpath');
+    addAlias('jshintrc',     'classpath');
+    addAlias('project',      'classpath');
+    addAlias('todo',         'classpath');
+
     var def = {
         color: '#ffffff'
     }
