@@ -29,6 +29,7 @@ This extension adds colours and highlights to file extensions on the brackets fi
  - Puppet (pp)
  - SQL
  - Archives (rar, zip, 7z, tgz, tar, gz, bzip)
+ - PDF
 
 You can request more file formats by creating an issue. Choose a color (in hex format) and add it to the issue.
 
