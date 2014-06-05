@@ -76,9 +76,10 @@ define(function(require, exports, module) {
     addDef('mp3',       '#921100');
     addAlias('wav',     'mp3');
 
-    // Readme
+    // Documents
     addDef('md',        '#b94700');
     addAlias('markdown','md');
+    addDef('pdf',       '#FF0000');
     
     // Templating
     addDef('jade',      '#00a86b');
@@ -228,4 +229,8 @@ define(function(require, exports, module) {
     $(DocumentManager).on("workingSetAdd workingSetAddList workingSetRemove workingSetRemoveList fileNameChange pathDeleted workingSetSort", function() {
         renderFiles('#open-files-container');
     });
+
+    renderFiles('#project-files-container', true);
+    renderFiles('#open-files-container');
+
 });
