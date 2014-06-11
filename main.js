@@ -129,8 +129,11 @@ define(function(require, exports, module) {
     addAlias('project',      'classpath');
     addAlias('todo',         'classpath');
 
+    // Ruby
+    addDef('rb',        '#CC342D');
+
     var def = {
-        color: '#ffffff'
+        color: 'rgb(187, 187, 187)'
     }
 
     var ProjectManager = brackets.getModule('project/ProjectManager'),
