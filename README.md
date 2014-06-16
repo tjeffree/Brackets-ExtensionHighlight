@@ -32,6 +32,7 @@ This extension adds colours and highlights to file extensions on the brackets fi
  - PDF
  - Other dot Files (classpath, editorconfig, jscsrc, jshintignore, jshintrc, project, todo)
  - Ruby (rb)
+ - Coldfusion (cfm, cfml)
 
 You can request more file formats by creating an issue. Choose a color (in hex format) and add it to the issue.
 

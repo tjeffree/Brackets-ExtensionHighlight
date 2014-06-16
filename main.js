@@ -132,6 +132,10 @@ define(function(require, exports, module) {
     // Ruby
     addDef('rb',        '#CC342D');
 
+    // Coldfusion
+    addDef('cfm',       '#74B1D4');
+    addAlias('cfml',    'cfm');
+
     var def = {
         color: 'rgb(187, 187, 187)'
     }
