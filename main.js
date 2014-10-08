@@ -1,6 +1,7 @@
 define(function(require, exports, module) {
     
-    var fileInfo = {},
+    var CLASS_PREFIX = 'b-exthl-',
+        fileInfo = {},
         sideBarColour = null,
         bgLuminance,
         constrastCache = {};
@@ -144,21 +145,72 @@ define(function(require, exports, module) {
         DocumentManager = brackets.getModule('document/DocumentManager'),
         ExtensionUtils = brackets.getModule("utils/ExtensionUtils");
 
+    // Add new modules for V0.44+
+    try {
+        var
+            MainViewManager = brackets.getModule('view/MainViewManager'),
+            FileTreeView = brackets.getModule("project/FileTreeView");
+    } catch (e) { /* do nothing */ }
+
     ExtensionUtils.loadStyleSheet(module, "styles/style.css");
     
-    function renderFiles(container, requireLeaf) {
+    // Create the CSS for all the classes
+    (function(){
+
+        // V0.44+ only
+        if (!FileTreeView) {
+            return;
+        }
+
+        // Create a new stylesheet and populate with file settings
+        var contrast,
+            newStyle,
+            style = document.createElement('style');
+
+        style.setAttribute('media','screen');
+        style.appendChild(document.createTextNode(''));
+        style.id = 'ext-highlight';
         
-        $(container + ' li>a>.ext-col').remove();
-        $(container + ' li>a>.extension').show();
+        document.head.appendChild(style);
         
-        [].forEach.call( document.querySelectorAll(container + ' li>a') , function(el) {
+        for (var ext in fileInfo) {
             
-            if (requireLeaf === true && !el.parentNode.classList.contains('jstree-leaf')) {
-                return false;
+            contrast = getContrast(fileInfo[ext].color);
+
+            if (contrast === false) {
+                newStyle =    "color: #f1f1f1; "
+                            + "background: linear-gradient(to right, rgba(0,0,0,0) 0%, " + fileInfo[ext].color + " 33%); "
+                            + "border-radius: 8px; "
+                            + "padding-right: 5px;";
+            } else {
+                newStyle = 'color: ' + fileInfo[ext].color + ';';
             }
             
-            parseExtension( el.querySelector('.extension') );
-        });
+            style.sheet.insertRule('.jstree-brackets li.' + CLASS_PREFIX + ext + ' span.extension {' + newStyle + '}');
+
+        }
+
+    })();
+
+    function renderFiles(container, requireLeaf) {
+
+        var aList = document.querySelectorAll(container + ' li>a');
+
+        if (aList.length > 0) {
+
+            $(container + ' li>a>.ext-col').remove();
+            $(container + ' li>a>.extension').show();
+
+            [].forEach.call( aList , function(el) {
+
+                if (requireLeaf === true && !el.parentNode.classList.contains('jstree-leaf')) {
+                    return false;
+                }
+
+                parseExtension( el.querySelector('.extension') );
+            });
+
+        }
 
     }
     
@@ -229,24 +281,63 @@ define(function(require, exports, module) {
         return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
     }
 
-    $(ProjectManager).on('projectOpen projectRefresh', function() {
-        var events = 'load_node.jstree create_node.jstree set_text.jstree';
-        
-        function doRender() {
-            renderFiles('#project-files-container', true);
-        }
-        
-        doRender();
+    if (!FileTreeView) {
+        // Pre V0.44
+        $(ProjectManager).on('projectOpen projectRefresh', function() {
+            var events = 'load_node.jstree create_node.jstree set_text.jstree';
 
-        $('#project-files-container').off(events, doRender)
-                                     .on(events, doRender);
-    });
+            function doRender() {
+                renderFiles('#project-files-container', true);
+            }
 
-    $(DocumentManager).on("workingSetAdd workingSetAddList workingSetRemove workingSetRemoveList fileNameChange pathDeleted workingSetSort", function() {
-        renderFiles('#open-files-container');
-    });
+            doRender();
 
-    renderFiles('#project-files-container', true);
-    renderFiles('#open-files-container');
+            $('#project-files-container').off(events, doRender)
+                                         .on(events, doRender);
+        });
+
+        renderFiles('#project-files-container', true);
+
+    } else {
+        FileTreeView.addClassesProvider(function(entry) {
+
+            if (entry.isFile === false) {
+                // Not a file, not bothered
+                return;
+            }
+
+            var extInfo,
+                ext = entry.name,
+                lastIndex = ext.lastIndexOf('.');
+
+            if (lastIndex >= 0) {
+                ext = ext.substr(lastIndex + 1);
+            } else {
+                ext = '';
+            }
+
+            if (fileInfo.hasOwnProperty(ext)) {
+
+                return CLASS_PREFIX + ext;
+
+            }
+
+            return '';
+
+        });
+    }
+
+    if (MainViewManager) {
+        $(MainViewManager).on("workingSetAdd workingSetAddList workingSetRemove workingSetRemoveList fileNameChange pathDeleted workingSetSort workingSetUpdate currentFileChange", function(e) {
+            // doRender();
+            setTimeout(function() { renderFiles('.open-files-container'); }, 1);
+        });
+    } else {
+        $(DocumentManager).on("workingSetAdd workingSetAddList workingSetRemove workingSetRemoveList fileNameChange pathDeleted workingSetSort", function(e) {
+            renderFiles('.open-files-container');
+        });
+    }
+
+    renderFiles('.open-files-container');
 
 });
