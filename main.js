@@ -251,7 +251,7 @@ define(function(require, exports, module) {
         }
         
         oldExt.style.display = 'none';
-        oldExt.parentNode.appendChild(newEle);
+        oldExt.parentNode.insertBefore(newEle, oldExt);
         
     }
     
@@ -312,24 +312,20 @@ define(function(require, exports, module) {
 
             if (lastIndex >= 0) {
                 ext = ext.substr(lastIndex + 1);
-            } else {
-                ext = '';
+
+                if (fileInfo.hasOwnProperty(ext)) {
+                    return CLASS_PREFIX + ext;
+                }
             }
 
-            if (fileInfo.hasOwnProperty(ext)) {
-
-                return CLASS_PREFIX + ext;
-
-            }
-
-            return '';
+            return;
 
         });
     }
 
     if (MainViewManager) {
         $(MainViewManager).on("workingSetAdd workingSetAddList workingSetRemove workingSetRemoveList fileNameChange pathDeleted workingSetSort workingSetUpdate currentFileChange", function(e) {
-            // doRender();
+            // renderFiles('.open-files-container');
             setTimeout(function() { renderFiles('.open-files-container'); }, 1);
         });
     } else {
