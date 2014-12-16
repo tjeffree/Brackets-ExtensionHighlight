@@ -104,15 +104,16 @@ define(function(require, exports, module) {
     
     // SQL
     addDef('sql',       '#008DBB');
+    addDef('sqf',       '#b9e11f');
     
     // Archives
     addDef('zip',       '#008858');
-    addAlias('rar',     'zip');
-    addAlias('7z' ,     'zip');
-    addAlias('tgz',     'zip');
-    addAlias('tar',     'zip');
-    addAlias('gz' ,     'zip');
-    addAlias('bzip',    'zip');
+    addDef('rar',       '#005888');
+    addDef('7z',        '#880058');
+    addDef('tgz',       '#7900BC');
+    addDef('tar',       '#885800');
+    addDef('gz',        '#588800');
+    addDef('bzip',      '#884300');
     
     // Other text files
     addDef('txt',       '#4192c1');
@@ -123,6 +124,7 @@ define(function(require, exports, module) {
     
     // Other dot files
     addDef('classpath',      '#bbbbbb');
+    addDef('properties',     '#00ff00');
     addAlias('editorconfig', 'classpath');
     addAlias('jscsrc',       'classpath');
     addAlias('jshintignore', 'classpath');
@@ -136,6 +138,36 @@ define(function(require, exports, module) {
     // Coldfusion
     addDef('cfm',       '#74B1D4');
     addAlias('cfml',    'cfm');
+
+    // Haxe
+    addDef('hx',        '#be9c17');
+
+    // Lua
+    addDef('lua',       '#11d2bf');
+
+    // Lua
+    addDef('pl',        '#0000ff');
+
+    // C/C++/C#
+    addDef('c',         '#008985');
+    addAlias('cs',      'c');
+    addAlias('cpp',     'c');
+
+    // VB
+    addDef('vb',        '#0000ff');
+    addDef('vbs',       '#00ff00');
+
+    // Groovy
+    addDef('groovy',    '#0000ff');
+
+    // Scala
+    addDef('scala',     '#b19714');
+
+    // Clojure
+    addDef('clj',       '#e1ce29');
+
+    // Python
+    addDef('py',        '#fdca3c');
 
     var def = {
         color: 'rgb(187, 187, 187)'
