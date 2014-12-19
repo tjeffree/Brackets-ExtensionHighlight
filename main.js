@@ -1,13 +1,26 @@
 define(function(require, exports, module) {
+    "use strict";
     
     var CLASS_PREFIX = 'b-exthl-',
         fileInfo = {},
         sideBarColour = null,
         bgLuminance,
-        constrastCache = {};
+        constrastCache = {},
+        menuCmd,
+        _preferences,
+        preferencesId    = "tjeffree.extensionhighlighter",
+        CONTRAST_MENU_ID = preferencesId + ".toggle",
 
-    // Get initial sidebar colour and luminance
+        CommandManager     = brackets.getModule("command/CommandManager"),
+        PreferencesManager = brackets.getModule("preferences/PreferencesManager"),
+        ProjectManager = brackets.getModule('project/ProjectManager'),
+        DocumentManager = brackets.getModule('document/DocumentManager'),
+        ExtensionUtils = brackets.getModule("utils/ExtensionUtils");
+
+    // Manage some startup tasks
     (function() {
+
+        // Get initial sidebar colour and luminance
         sideBarColour = $('#sidebar').css('backgroundColor').match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
 
         if (sideBarColour === null) {
@@ -16,6 +29,29 @@ define(function(require, exports, module) {
         }
 
         bgLuminance = luminanace(sideBarColour[1],sideBarColour[2],sideBarColour[3]);
+
+
+        // Add menu item to disable background contrast (might make some extensions hards to read) as per #16
+        var CommandManager = brackets.getModule("command/CommandManager"),
+            Menus          = brackets.getModule("command/Menus");
+
+        menuCmd = CommandManager.get(CONTRAST_MENU_ID);
+
+        if (!menuCmd) {
+            menuCmd = CommandManager.register("Disable Contrast In File Tree", CONTRAST_MENU_ID, handleConstrastSwitch);
+        } else {
+            menuCmd._commandFn = handleConstrastSwitch;
+        }
+
+        var menu = Menus.getMenu(Menus.AppMenuBar.VIEW_MENU);
+        menu.addMenuItem(CONTRAST_MENU_ID);
+
+        $(menuCmd).on("checkedStateChange", onCheckedStateChange);
+
+        loadPreferences();
+
+        menuCmd.setChecked(_preferences.get("checked"));
+
 
     })();
 
@@ -173,10 +209,6 @@ define(function(require, exports, module) {
         color: 'rgb(187, 187, 187)'
     }
 
-    var ProjectManager = brackets.getModule('project/ProjectManager'),
-        DocumentManager = brackets.getModule('document/DocumentManager'),
-        ExtensionUtils = brackets.getModule("utils/ExtensionUtils");
-
     // Add new modules for V0.44+
     try {
         var
@@ -193,6 +225,14 @@ define(function(require, exports, module) {
         if (!FileTreeView) {
             return;
         }
+
+        createStyles();
+
+    })();
+
+    function createStyles() {
+
+        $('#ext-highlight').remove();
 
         // Create a new stylesheet and populate with file settings
         var contrast,
@@ -218,11 +258,10 @@ define(function(require, exports, module) {
                 newStyle = 'color: ' + fileInfo[ext].color + ';';
             }
             
-            style.sheet.insertRule('.jstree-brackets li.' + CLASS_PREFIX + ext + ' span.extension {' + newStyle + '}');
+            style.sheet.insertRule('.jstree-brackets li.' + CLASS_PREFIX + ext + ' span.extension {' + newStyle + '}', 0);
 
         }
-
-    })();
+    }
 
     function renderFiles(container, requireLeaf) {
 
@@ -289,6 +328,11 @@ define(function(require, exports, module) {
     
     function getContrast(hexcolor){
         
+        // If disabled
+        if (menuCmd.getChecked() === true) {
+            return true;
+        }
+
         if (!(hexcolor in constrastCache)) {
         
             var r = parseInt(hexcolor.substr(1,2),16),
@@ -312,6 +356,31 @@ define(function(require, exports, module) {
             });
         return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
     }
+
+    // Methods for handling menu item toggle
+
+    function loadPreferences() {
+        _preferences = PreferencesManager.getExtensionPrefs(preferencesId);
+        _preferences.definePreference("checked", "boolean", false);
+    }
+
+    function handleConstrastSwitch() {
+        if (!menuCmd.getChecked()) {
+            menuCmd.setChecked(true);
+        } else {
+            menuCmd.setChecked(false);
+        }
+    }
+
+    function onCheckedStateChange() {
+        _preferences.set("checked", Boolean(menuCmd.getChecked()));
+        renderFiles('.open-files-container');
+        createStyles();
+        ProjectManager.rerenderTree();
+    }
+
+    // --------------------------------------
+    // --------------------------------------
 
     if (!FileTreeView) {
         // Pre V0.44
