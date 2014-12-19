@@ -11,11 +11,10 @@ define(function(require, exports, module) {
         preferencesId    = "tjeffree.extensionhighlighter",
         CONTRAST_MENU_ID = preferencesId + ".toggle",
 
-        CommandManager     = brackets.getModule("command/CommandManager"),
         PreferencesManager = brackets.getModule("preferences/PreferencesManager"),
-        ProjectManager = brackets.getModule('project/ProjectManager'),
-        DocumentManager = brackets.getModule('document/DocumentManager'),
-        ExtensionUtils = brackets.getModule("utils/ExtensionUtils");
+        ProjectManager     = brackets.getModule('project/ProjectManager'),
+        DocumentManager    = brackets.getModule('document/DocumentManager'),
+        ExtensionUtils     = brackets.getModule("utils/ExtensionUtils");
 
     // Manage some startup tasks
     (function() {
@@ -31,9 +30,9 @@ define(function(require, exports, module) {
         bgLuminance = luminanace(sideBarColour[1],sideBarColour[2],sideBarColour[3]);
 
 
-        // Add menu item to disable background contrast (might make some extensions hards to read) as per #16
-        var CommandManager = brackets.getModule("command/CommandManager"),
-            Menus          = brackets.getModule("command/Menus");
+        // Add menu item to disable background contrast (might make some extensions hard to read) as per #16
+        var CommandManager  = brackets.getModule("command/CommandManager"),
+            Menus           = brackets.getModule("command/Menus");
 
         menuCmd = CommandManager.get(CONTRAST_MENU_ID);
 
