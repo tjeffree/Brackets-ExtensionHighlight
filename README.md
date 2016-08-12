@@ -11,7 +11,7 @@ This extension adds colours and highlights to file extensions on the brackets fi
  - SVG
  - XML
  - PHP
- - Java
+ - Java, Java Server Pages
  - CSS, SASS, Less, Stylus
  - Shell script (sh, bat)
  - TXT
