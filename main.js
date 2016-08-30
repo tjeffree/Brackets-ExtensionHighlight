@@ -90,6 +90,9 @@ define(function(require, exports, module) {
     addDef('java',      '#5382A1');
     addAlias('class',   'java');
 
+  // Java server pages
+    addAlias('jsp',     'html');
+
     // Shell
     addDef('sh',        '#008d00');
     addDef('bat',       '#60c910');
