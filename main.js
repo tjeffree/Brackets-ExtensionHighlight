@@ -45,7 +45,7 @@ define(function(require, exports, module) {
         var menu = Menus.getMenu(Menus.AppMenuBar.VIEW_MENU);
         menu.addMenuItem(CONTRAST_MENU_ID);
 
-        $(menuCmd).on("checkedStateChange", onCheckedStateChange);
+        menuCmd.on("checkedStateChange", onCheckedStateChange);
 
         loadPreferences();
 
@@ -383,7 +383,7 @@ define(function(require, exports, module) {
 
     if (!FileTreeView) {
         // Pre V0.44
-        $(ProjectManager).on('projectOpen projectRefresh', function() {
+        ProjectManager.on('projectOpen projectRefresh', function() {
             var events = 'load_node.jstree create_node.jstree set_text.jstree';
 
             function doRender() {
@@ -424,12 +424,12 @@ define(function(require, exports, module) {
     }
 
     if (MainViewManager) {
-        $(MainViewManager).on("workingSetAdd workingSetAddList workingSetRemove workingSetRemoveList fileNameChange pathDeleted workingSetSort workingSetUpdate currentFileChange", function(e) {
+        MainViewManager.on("workingSetAdd workingSetAddList workingSetRemove workingSetRemoveList fileNameChange pathDeleted workingSetSort workingSetUpdate currentFileChange", function(e) {
             // renderFiles('.open-files-container');
             setTimeout(function() { renderFiles('.open-files-container'); }, 1);
         });
     } else {
-        $(DocumentManager).on("workingSetAdd workingSetAddList workingSetRemove workingSetRemoveList fileNameChange pathDeleted workingSetSort", function(e) {
+        DocumentManager.on("workingSetAdd workingSetAddList workingSetRemove workingSetRemoveList fileNameChange pathDeleted workingSetSort", function(e) {
             renderFiles('.open-files-container');
         });
     }
