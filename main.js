@@ -206,6 +206,12 @@ define(function(require, exports, module) {
 
     // Python
     addDef('py',        '#fdca3c');
+    
+    //Lex Yacc files
+    addDef('l',         '##cc0099');
+    addAlias('lex',    'l');
+    addDef('y',         '#ff66cc');
+    addAlias('yacc',    'y');
 
     var def = {
         color: 'rgb(187, 187, 187)'
