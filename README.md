@@ -45,6 +45,12 @@ What it looks like
 
 ![Screenshot](https://raw.githubusercontent.com/tjeffree/Brackets-ExtensionHighlight/master/examples/gif.gif)
 
+Contributors
+------------
+
+ * [Akash Vartak](https://github.com/akash-vartak)
+ * [Michael McIver](https://github.com/mike1104)
+
 License
 -------
 Brackets Extension Highlighter is licensed under the [MIT license](http://opensource.org/licenses/MIT).
